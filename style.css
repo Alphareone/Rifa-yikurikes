@@ -105,6 +105,7 @@ header {
     font-weight: 900;
     letter-spacing: 2px;
     background: linear-gradient(90deg, var(--neon-blue), var(--neon-pink), var(--neon-gold));
+    background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     text-shadow: 0 0 30px rgba(255, 0, 127, 0.6);
