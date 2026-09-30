@@ -171,6 +171,7 @@ main {
     justify-content: center;
     align-items: center;
     z-index: 1;
+    flex: 1;
 }
 
 .module {
@@ -519,6 +520,24 @@ canvas#wheelCanvas {
     box-shadow: 0 0 50px rgba(0, 243, 255, 0.35); 
     display: block;
     background: rgba(3, 2, 8, 0.95);
+}
+
+/* FOOTER PROFESIONAL */
+footer {
+    width: 100%;
+    text-align: center;
+    padding: 16px 15px;
+    background: rgba(5, 3, 10, 0.95);
+    border-top: 1px solid rgba(0, 243, 255, 0.2);
+    color: #888;
+    font-size: 0.78rem;
+    letter-spacing: 1px;
+    margin-top: auto;
+    z-index: 10;
+}
+
+footer span {
+    color: var(--neon-pink);
 }
 
 /* MODAL GANADOR FESTIVO */
