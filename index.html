@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GRAN RIFA ALIMENTO GATITOS // @yikurikes.dmi</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Librería de Confeti para Celebraciones -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+</head>
+<body>
+
+    <div class="cyber-grid"></div>
+    <div class="bg-decorations" id="bgDecorations"></div>
+
+    <header>
+        <div class="header-title-container">
+            <span class="cat-animated-icon">🐱</span>
+            <div class="logo">GRAN RIFA @YIKURIKES.DMI</div>
+            <span class="cat-animated-icon cat-right">🐈‍‍⬛</span>
+        </div>
+        <div class="subtitle">🐾 ¡Ayudemos a nuestras queridas michis a llenar sus pancitas! 🐾</div>
+        <div class="rifa-info-banner">VALOR NÚMERO: $1.000 &nbsp;|&nbsp; 100% PARA ALIMENTO FELINO 🐈</div>
+        
+        <nav>
+            <button class="nav-btn active" onclick="switchTab('tombola', event)">✨ TÓMBOLA DE CANICAS</button>
+            <button class="nav-btn" onclick="switchTab('ruleta', event)">🎡 RULETA DE GATITOS</button>
+        </nav>
+    </header>
+
+    <main>
+        <!-- MÓDULO 1: TÓMBOLA -->
+        <section id="tombola" class="module active">
+            <div class="config-box">
+                <div class="input-group">
+                    <label for="currentPrizeSelect">PREMIO EN SORTEO:</label>
+                    <select id="currentPrizeSelect" class="custom-select" onchange="updateSelectedPrizeHighlight()">
+                        <option value="Set de 4 tazas">☕ 1. Set de 4 tazas (Menor)</option>
+                        <option value="Set de 6 vasos">🥛 2. Set de 6 vasos</option>
+                        <option value="Set de utensilios de cocina">🍳 3. Set de utensilios de cocina</option>
+                        <option value="Premio sorpresa">✨ 4. Premio sorpresa (Mayor)</option>
+                    </select>
+                </div>
+                <button class="btn-reset" onclick="resetTombola()">RESTABLECER TÓMBOLA</button>
+            </div>
+            
+            <div class="content-layout">
+                <!-- Panel Izquierdo: Premios interactivos (Clicables) -->
+                <div class="side-panel left-panel">
+                    <div class="panel-title">🎁 PREMIOS OFICIALES</div>
+                    <div class="panel-hint">💡 (Haz clic en un premio para seleccionarlo)</div>
+                    <ul class="prizes-list" id="prizesListContainer">
+                        <li data-prize="Set de 4 tazas" onclick="selectPrizeFromList('Set de 4 tazas')">☕ Set de 4 tazas</li>
+                        <li data-prize="Set de 6 vasos" onclick="selectPrizeFromList('Set de 6 vasos')">🥛 Set de 6 vasos</li>
+                        <li data-prize="Set de utensilios de cocina" onclick="selectPrizeFromList('Set de utensilios de cocina')">🍳 Set utensilios cocina</li>
+                        <li data-prize="Premio sorpresa" onclick="selectPrizeFromList('Premio sorpresa')">✨ Premio sorpresa</li>
+                    </ul>
+                </div>
+
+                <!-- Centro Absoluto: Tómbola Circular Perfecta -->
+                <div class="center-stage">
+                    <div class="counter-badge" id="tombolaCounter">RESTANTES: 100 CANICAS</div>
+                    <div class="tombola-wrapper">
+                        <div class="cat-ears-overlay">
+                            <div class="ear">😺</div>
+                            <div class="ear">😻</div>
+                        </div>
+                        <div class="tombola-container">
+                            <canvas id="tombolaCanvas" width="340" height="340"></canvas>
+                        </div>
+                    </div>
+                    <button class="action-btn" id="btnTombola" onclick="spinTombola()">GIRAR Y EXTRAER</button>
+                </div>
+
+                <!-- Panel Derecho: Historial -->
+                <div class="side-panel right-panel">
+                    <div class="panel-title">🏆 GANADORES TÓMBOLA</div>
+                    <ul class="history-list" id="tombolaHistoryList">
+                        <li class="empty-history">Sin ganadores aún</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- MÓDULO 2: RULETA -->
+        <section id="ruleta" class="module">
+            <div class="config-box">
+                <div class="input-group">
+                    <label for="rouletteMode">MODO DE RULETA:</label>
+                    <select id="rouletteMode" class="custom-select" onchange="toggleRouletteMode()">
+                        <option value="cats" selected>🐾 GATITOS (Yui, Keira, Kuro, etc.)</option>
+                        <option value="numbers">🔢 NÚMEROS (100 BASE)</option>
+                        <option value="text">✏️ PERSONALIZADO (TEXTO)</option>
+                    </select>
+                </div>
+
+                <div class="input-group" id="rouletteTextContainer" style="display: none;">
+                    <label for="rouletteNames">OPCIONES (COMA):</label>
+                    <input type="text" id="rouletteNames" class="custom-input" value="Set Tazas, Set Vasos, Utensilios, Sorpresa">
+                </div>
+
+                <button class="btn-reset" onclick="resetRoulette()">RESTABLECER RULETA</button>
+            </div>
+
+            <div class="content-layout">
+                <!-- Panel Izquierdo: Gatitos -->
+                <div class="side-panel left-panel">
+                    <div class="panel-title">🐱 NUESTROS GATITOS</div>
+                    <div class="panel-hint">🐾 El alma de la rifa felina</div>
+                    <ul class="prizes-list cats-showcase">
+                        <li>💖 Yui & Keira</li>
+                        <li>🖤 Kuro & Siorette</li>
+                        <li>✨ Rini & Milla</li>
+                        <li>👑 Minerva, Damita & Beyons</li>
+                    </ul>
+                </div>
+
+                <!-- Centro Absoluto: Ruleta Circular Perfecta -->
+                <div class="center-stage">
+                    <div class="counter-badge" id="rouletteCounter">OPCIONES RESTANTES: 9</div>
+                    <div class="roulette-wrapper">
+                        <div class="pointer"></div>
+                        <canvas id="wheelCanvas" width="340" height="340"></canvas>
+                    </div>
+                    <button class="action-btn" id="btnRoulette" onclick="spinWheel()">GIRAR RULETA FELINA</button>
+                </div>
+
+                <!-- Panel Derecho: Historial Ruleta -->
+                <div class="side-panel right-panel">
+                    <div class="panel-title">🏆 GANADORES RULETA</div>
+                    <ul class="history-list" id="rouletteHistoryList">
+                        <li class="empty-history">Sin ganadores aún</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- MODAL GANADOR CON CELEBRACIÓN -->
+    <div class="result-overlay" id="resultOverlay">
+        <div class="result-box">
+            <div class="celebration-badge">🎉 ¡META CUMPLIDA! 🎉</div>
+            <div class="cat-winner-emoji">😻🏆</div>
+            <div class="result-title" id="resultModalTitle">¡RESULTADO DEL SORTEO!</div>
+            <div class="result-value" id="resultVal">00</div>
+            <div class="congrats-text">¡Felicitaciones al ganador de este gran premio gatuno! 🐾✨</div>
+            <button class="action-btn" onclick="closeResult()">¡FESTEJAR Y CONTINUAR!</button>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
